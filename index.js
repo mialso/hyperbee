@@ -12,7 +12,7 @@ const Extension = require('./lib/extension')
 const { YoloIndex, Node, Header } = require('./lib/messages')
 const { BLOCK_NOT_AVAILABLE } = require('hypercore-errors')
 
-const { TreeNode, Child, MIN_KEYS } = require('./lib/tree-node.js')
+const { TreeNode, Child, MIN_KEYS } = require('./lib/tree/tree-node.js')
 const { sameValue } = require('./lib/util.js')
 const { EntryWatcher } = require('./lib/entry-watcher.js')
 const { Watcher } = require('./lib/watcher.js')
