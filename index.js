@@ -11,8 +11,8 @@ const Extension = require('./lib/extension')
 const { Header } = require('./lib/messages')
 const { BLOCK_NOT_AVAILABLE } = require('hypercore-errors')
 
-const { EntryWatcher } = require('./lib/entry-watcher.js')
-const { Watcher } = require('./lib/watcher.js')
+const { EntryWatcher } = require('./lib/view/entry-watcher.js')
+const { Watcher } = require('./lib/view/watcher.js')
 const { Batch } = require('./lib/db/batch.js')
 const {
   enc, iteratorPeek, encRange, SEP, EMPTY, iteratorToStream
