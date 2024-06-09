@@ -2,7 +2,6 @@ const codecs = require('codecs')
 const mutexify = require('mutexify/promise')
 const b4a = require('b4a')
 const ReadyResource = require('ready-resource')
-const Xache = require('xache')
 
 const RangeIterator = require('./iterators/range')
 const HistoryIterator = require('./iterators/history')
@@ -14,38 +13,10 @@ const { BLOCK_NOT_AVAILABLE } = require('hypercore-errors')
 const { EntryWatcher } = require('./lib/view/entry-watcher.js')
 const { Watcher } = require('./lib/view/watcher.js')
 const { Batch } = require('./lib/db/batch.js')
+const { Cache } = require('./lib/cache.js')
 const {
   enc, iteratorPeek, encRange, SEP, EMPTY, iteratorToStream
 } = require('./lib/util.js')
-
-class Cache {
-  constructor () {
-    this.keys = new Xache({ maxSize: 65536 })
-    this.length = 0
-  }
-
-  get (seq) {
-    return this.keys.get(seq) || null
-  }
-
-  set (seq, key) {
-    this.keys.set(seq, key)
-    if (seq >= this.length) this.length = seq + 1
-  }
-
-  gc (length) {
-    // if we need to "work" more than 128 ticks, just bust the cache...
-    if (this.length - length > 128) {
-      this.keys.clear()
-    } else {
-      for (let i = length; i < this.length; i++) {
-        this.keys.delete(i)
-      }
-    }
-
-    this.length = length
-  }
-}
 
 class Hyperbee extends ReadyResource {
   constructor (core, opts = {}) {
